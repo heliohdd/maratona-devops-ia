@@ -9,7 +9,7 @@ jobs:
     CI:
         runs-on: ubuntu-latest
         steps:
-            - run: echo "Obter o código"
+            - run: ech "Obter o código"
             - run: echo "Executar o Docker Build"
             - run: echo "Enviar a Imagem Docker para o Docker Hub"
 

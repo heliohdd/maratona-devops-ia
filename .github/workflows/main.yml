@@ -2,13 +2,11 @@ name: CI KubeNews
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - '02-kube-news/**'
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  build-and-push:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,13 +18,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
         with:
-          context: ./02-kube-news/src
-          file: ./02-kube-news/src/Dockerfile
+          context: 02-kube-news/src
+          file: 02-kube-news/src/Dockerfile
           push: true
-          tags: heliohdd/kube-news-maratona:${{ github.run_number }}
+          tags: |
+            heliohdd/kube-news-maratona:v${{ github.run_number }}
+            heliohdd/kube-news-maratona:latest
